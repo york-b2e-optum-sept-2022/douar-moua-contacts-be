@@ -20,4 +20,9 @@ public class AccountController {
     public Account createAccount(@RequestBody NewAccountRequestDTO requestDTO){
         return this.accountService.createAccount(requestDTO);
     }
+
+    @GetMapping
+    public Account loginAccount(@RequestBody NewAccountRequestDTO requestDTO){
+        return this.accountService.loginAccount(requestDTO);
+    }
 }
