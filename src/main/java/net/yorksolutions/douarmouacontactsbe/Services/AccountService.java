@@ -1,7 +1,11 @@
 package net.yorksolutions.douarmouacontactsbe.Services;
 
+import net.yorksolutions.douarmouacontactsbe.DTOs.NewAccountRequestDTO;
+import net.yorksolutions.douarmouacontactsbe.Entities.Account;
 import net.yorksolutions.douarmouacontactsbe.Repositories.AccountRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class AccountService {
@@ -10,5 +14,13 @@ public class AccountService {
 
     public AccountService(AccountRepository accountRepository) {
         this.accountRepository = accountRepository;
+    }
+
+    public Account createAccount(NewAccountRequestDTO requestDTO){
+        try {
+            return this.accountRepository.save(new Account(requestDTO.username, requestDTO.password));
+        } catch (RuntimeException e){
+            throw new ResponseStatusException(HttpStatus.CONFLICT);
+        }
     }
 }
